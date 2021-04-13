@@ -183,30 +183,22 @@ int insertNode(headNode* h, int key) {
  
  
 int insertLast(headNode* h, int key) {
-			
-        listNode*n =h->first;
-	if(n== NULL){	                             
-		n = node;		
-		return 0;				
+
+	listNode* Litnode = h->first;      
+	listNode* Node = (listNode*)malloc(sizeof(listNode));
+	Node->key = key;
+	Node->link = NULL;
+	
+	if (Litnode == NULL) { 
+		Litnode = Node;
+	}
+	else {
+		while (Litnode->link != NULL) { 
+			Litnode = Litnode->link;
+		}
+		Litnode->link = Node;            // 끝에 삽입
 	}
 	
-        else{
-		listNode* node = (listNode*)malloc(sizeof(listNode)); //리스트노드 생성
-		listNode* Litnode = (listNode*)malloc(sizeof(listNode)); 
-		
-		node->key = key;
-		node->link = NULL;
-		
-		Litnode = n;
-			while(Litnode->link !=NULL)
-			{
-				Litnode=Litnode->link;
-			}
-			
-			node->link = Litnode->link;
-			
-			Litnode->link = node;    //삽입
-	}
 	return 0;
 }
 
@@ -249,7 +241,7 @@ int deleteNode(headNode* h, int key) {
 	    	 	     h->first=Litnode->link; 
 			 } 
 	         else{
-			 Prenode->link = head->link;  
+			 Prenode->link =Litnode->link;  
 	              }
 			 free(Litnode); 
 			 return 0; 
