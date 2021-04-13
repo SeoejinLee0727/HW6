@@ -216,11 +216,12 @@ int insertLast(headNode* h, int key) {
  */
 int deleteFirst(headNode* h) {
 
-         if(h->first ==NULL){
+         listNode* Litnode = h->first;
+         if(Litnode ==NULL){
 			printf("삭제할 노드가 존재하지 않습니다.\n");
 			return 0;
 	    }
-        listNode* Litnode = h->first;
+        
 	Litnode = Litnode->link;      // head 다음으로 이동
 	free(Litnode);                 // 메모리 해제
 	
@@ -232,13 +233,35 @@ int deleteFirst(headNode* h) {
  * list에서 key에 대한 노드 삭제
  */
 int deleteNode(headNode* h, int key) {
-            if(h->first ==NULL){
+
+       listNode* Litnode = h->first;
+       listNode* Prenode = NULL; 
+       
+       if(Litnode ==NULL){
 			printf("삭제할 노드가 존재하지 않습니다.\n");
 			return 0;
-	    }
+        }
 	    
+	while(Litnode != NULL)
+	{
+	    if(Litnode->key == key){ 
+	    	 if(Litnode == h->first){  
+	    	 	     h->first=Litnode->link; 
+			 } 
+	         else{
+			 Prenode->link = head->link;  
+	              }
+			 free(Litnode); 
+			 return 0; 
+		}
+		
+		Prenode = Litnode; 
+		Litnode= Litnode->link;
+		
+	}
+	
+    
 	return 0;
-
 }
 
 /**
@@ -246,6 +269,23 @@ int deleteNode(headNode* h, int key) {
  */
 int deleteLast(headNode* h) {
 
+        listNode* Litnode = h->first;
+        listNode* Prenode = NULL;
+
+        if(Litnode ==NULL){
+			printf("삭제할 노드가 존재하지 않습니다.\n");
+			return 0;
+        }
+        for (; Litnode; Litnode = Litnode->link) {
+
+		if (Litnode->link == NULL) {
+			free(Litnode);
+			Prenode->link = NULL;
+			break;
+		}
+		Prenode = Litnode;
+	}
+	
 	return 0;
 }
 
@@ -255,6 +295,27 @@ int deleteLast(headNode* h) {
  */
 int invertList(headNode* h) {
 
+	listNode* Litnode = h->first;
+	listNode* Node = NULL;
+	listNode* Prenode = NULL;
+	
+	if(Litnode ==NULL){
+			printf("삭제할 노드가 존재하지 않습니다.\n");
+			return 0;
+        }
+		
+	while (Litnode != NULL) {
+		Node= Litnode ;
+		Litnode = Litnode->link;
+		
+		Node->link = Prenode;
+		Prenode = Node;
+		
+		if (Node == NULL) {
+			h->first = Prenode;
+		}
+	}
+	
 	return 0;
 }
 
