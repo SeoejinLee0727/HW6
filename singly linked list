@@ -8,22 +8,22 @@
 
 
 #include<stdio.h>
-#include<stdlib.h>
+#include<stdlib.h>             // malloc , free 함수  헤더 파일 포함
 
 /* 필요한 헤더파일 추가 */
 
-typedef struct Node {
+typedef struct Node {           // 노드 구조체 정의
 	int key;
-	struct Node* link;
+	struct Node* link;     	// 다음 노드 주소를 저장할 포인터  link
 } listNode;
 
 typedef struct Head {
-	struct Node* first;
+	struct Node* first;      // 리스트 시작
 }headNode;
 
 
 /* 함수 리스트 */
-headNode* initialize(headNode* h);
+headNode* initialize(headNode* h); 
 int freeList(headNode* h);
 
 int insertFirst(headNode* h, int key);
@@ -133,6 +133,7 @@ int freeList(headNode* h){
 	}
 	free(h);
 	return 0;
+	
 }
 
 
@@ -142,12 +143,12 @@ int freeList(headNode* h){
  */
 int insertFirst(headNode* h, int key) {
 
-	listNode* node = (listNode*)malloc(sizeof(listNode));
-	node->key = key;
+	listNode* node = (listNode*)malloc(sizeof(listNode));          //리스트노드 생성 
+	node->key = key; 
 
-	node->link = h->first;
-	h->first = node;
-
+	node->link = h->first;            
+	h->first = node;                     //헤드에 노드 주소 넣음
+  
 	return 0;
 }
 
@@ -155,14 +156,57 @@ int insertFirst(headNode* h, int key) {
 /* 리스트를 검색하여, 입력받은 key보다 큰값이 나오는 노드 바로 앞에 삽입 */
 int insertNode(headNode* h, int key) {
 
+        listNode*n =h->first;
+	if( h == NULL){ 
+		insertFirst(h,key);
+	}
+	
+	else{
+		listNode* node = (listNode*)malloc(sizeof(listNode)); //리스트노드 생성
+		listNode* Litnode = (listNode*)malloc(sizeof(listNode)); //임시노드 생성
+		
+		node->key=key;
+		Litnode = n;
+		
+		while(Litnode< key){//첫 노드가 key보다 작은 경우
+			Litnode =Litnode->link; //한칸씩 뒤로
+		}
+
+		Litnode->link=node;
+	}
 	return 0;
 }
 
 /**
  * list에 key에 대한 노드하나를 추가
  */
+ 
+ 
 int insertLast(headNode* h, int key) {
-
+			
+        listNode*n =h->first;
+	if(n== NULL){	                             
+		n = node;		
+		return 0;				
+	}
+	
+        else{
+		listNode* node = (listNode*)malloc(sizeof(listNode)); //리스트노드 생성
+		listNode* Litnode = (listNode*)malloc(sizeof(listNode)); 
+		
+		node->key = key;
+		node->link = NULL;
+		
+		Litnode = n;
+			while(Litnode->link !=NULL)
+			{
+				Litnode=Litnode->link;
+			}
+			
+			node->link = Litnode->link;
+			
+			Litnode->link = node;    //삽입
+	}
 	return 0;
 }
 
