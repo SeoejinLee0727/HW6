@@ -39,6 +39,7 @@ void printList(headNode* h);
 
 int main()
 {
+        printf("-------------------------------[Seojin Lee][2020039034]------------------\n");
 	char command;
 	int key;
 	headNode* headnode=NULL;
